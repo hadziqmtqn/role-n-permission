@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 20, 2022 at 06:17 AM
+-- Generation Time: Aug 20, 2022 at 09:37 AM
 -- Server version: 5.7.33
 -- PHP Version: 8.1.9
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `role-n-permission`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -59,7 +72,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2022_08_20_042858_create_permission_tables', 1),
-(6, '2022_08_20_042941_create_products_table', 2);
+(6, '2022_08_20_042941_create_products_table', 1),
+(7, '2022_08_20_073105_create_categories_table', 1);
 
 -- --------------------------------------------------------
 
@@ -90,8 +104,7 @@ CREATE TABLE `model_has_roles` (
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1),
-(2, 'App\\Models\\User', 2);
+(1, 'App\\Models\\User', 1);
 
 -- --------------------------------------------------------
 
@@ -124,14 +137,18 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'role-list', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(2, 'role-create', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(3, 'role-edit', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(4, 'role-delete', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(5, 'product-list', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(6, 'product-create', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(7, 'product-edit', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21'),
-(8, 'product-delete', 'web', '2022-08-19 23:07:21', '2022-08-19 23:07:21');
+(1, 'role-list', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(2, 'role-create', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(3, 'role-edit', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(4, 'role-delete', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(5, 'permission-list', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(6, 'permission-create', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(7, 'permission-edit', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(8, 'permission-delete', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05'),
+(9, 'category-list', 'web', '2022-08-20 02:13:47', '2022-08-20 02:13:59'),
+(10, 'category-create', 'web', '2022-08-20 02:27:31', '2022-08-20 02:27:31'),
+(11, 'category-edit', 'web', '2022-08-20 02:27:40', '2022-08-20 02:27:40'),
+(12, 'category-delete', 'web', '2022-08-20 02:28:01', '2022-08-20 02:28:01');
 
 -- --------------------------------------------------------
 
@@ -185,8 +202,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'web', '2022-08-19 23:08:41', '2022-08-19 23:08:41'),
-(2, 'Staff', 'web', '2022-08-19 23:10:14', '2022-08-19 23:10:14');
+(1, 'Admin', 'web', '2022-08-20 01:38:05', '2022-08-20 01:38:05');
 
 -- --------------------------------------------------------
 
@@ -212,9 +228,10 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (6, 1),
 (7, 1),
 (8, 1),
-(5, 2),
-(6, 2),
-(7, 2);
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1);
 
 -- --------------------------------------------------------
 
@@ -238,12 +255,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'LaravelTuts', 'admin@laraveltuts.com', NULL, '$2y$10$TegWT.qltxA2W9PYrhQH4uOVvh/hoPrBJsxGLJspV758GPfnyOuDK', NULL, '2022-08-19 23:08:41', '2022-08-19 23:08:41'),
-(2, 'Staff', 'staff@g.com', NULL, '$2y$10$V7K7jZeK1zixNqeb9yQfRu6l2nOgjCF7CXR27b0ZIj6gY6oC51CmW', NULL, '2022-08-19 23:12:26', '2022-08-19 23:12:26');
+(1, 'Admin', 'admin@bekenweb.com', NULL, '$2y$10$ZEZjP.QE27MbADEBXknNzecxIOgSHEM0D0BvkN9smD5yO5EjagR0C', NULL, '2022-08-20 01:38:05', '2022-08-20 01:38:05');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -325,6 +347,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -334,13 +362,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -358,13 +386,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
